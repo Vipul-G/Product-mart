@@ -1,0 +1,48 @@
+<table mat-table [dataSource]="orders$ | async" class="mat-elevation-z8">
+
+  <!--- Note that these columns can be defined in any order.
+        The actual rendered columns are set as a property on the row definition" -->
+
+  <!-- Position Column -->
+  <ng-container matColumnDef="Order Id">
+    <th mat-header-cell *matHeaderCellDef> Order Id </th>
+    <td mat-cell *matCellDef="let element"> {{element.order_id}} </td>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="Payment Id">
+    <th mat-header-cell *matHeaderCellDef> Payment Id </th>
+    <td mat-cell *matCellDef="let element"> {{element.payment_id}} </td>
+  </ng-container>
+
+  <!-- Weight Column -->
+  <ng-container matColumnDef="Order Time">
+    <th mat-header-cell *matHeaderCellDef> Order Time </th>
+    <td mat-cell *matCellDef="let element"> {{element.order_time}} </td>
+  </ng-container>
+
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="Estimate Delivery">
+    <th mat-header-cell *matHeaderCellDef> Estimate Delivery </th>
+    <td mat-cell *matCellDef="let element"> {{element.estimate_delivery}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Amount">
+    <th mat-header-cell *matHeaderCellDef> Amount </th>
+    <td mat-cell *matCellDef="let element"> {{element.amount}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Payment Mode">
+    <th mat-header-cell *matHeaderCellDef> Payment Mode </th>
+    <td mat-cell *matCellDef="let element"> {{element.payment_mode}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Payment Status">
+    <th mat-header-cell *matHeaderCellDef> Payment Status </th>
+    <td mat-cell *matCellDef="let element"> {{element.payment_status ? 'Complete' : 'Incomplete'}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+

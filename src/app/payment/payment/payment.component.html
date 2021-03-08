@@ -1,0 +1,88 @@
+<mat-horizontal-stepper linear="true" #stepper>
+  <mat-step [stepControl]="firstFormGroup">
+    <h1>Select payment method</h1>
+    <h3 class="border">
+      <p>Name: {{(userState$ | async)?.name}}</p>
+      <p>Address: {{(userState$ | async)?.address}}</p>
+      <p>Contact: +91{{(userState$ | async)?.contact}}</p>
+    </h3>
+    <ng-template matStepLabel>Delivery & Payment</ng-template>
+    <form [formGroup]="firstFormGroup">
+
+      <mat-list role="list">
+        <mat-radio-group formControlName="paymentType" aria-label="Select an option">
+          <mat-list-item *ngFor="let type of paymentOptions"role="listitem">
+            <mat-radio-button  [value]="type">{{paymentEvaluator(type)}}</mat-radio-button>
+            <ng-template [ngIf]="type=='card'">
+              <mat-form-field  appearance="fill">
+                <mat-label>Enter card number</mat-label>
+                <input class="cardIn" formControlName="cardNo" matInput #input maxlength="16" placeholder="Ex. 4545-XXXX-XXXX-XXXX">
+              </mat-form-field>
+            </ng-template>
+          </mat-list-item>
+        </mat-radio-group>
+      </mat-list>
+
+      <div>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [completed]="placeOrderFlag" label="Place order">
+
+    <table mat-table [dataSource]="orders" class="mat-elevation-z8">
+      <!-- Item Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Product </th>
+        <td mat-cell *matCellDef="let item"> {{item.product.name}} </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <ng-container matColumnDef="quantity">
+        <th mat-header-cell *matHeaderCellDef> Quantity </th>
+        <td mat-cell *matCellDef="let item"> {{item.quantity}} </td>
+        <td mat-footer-cell *matFooterCellDef> <b>Total</b> </td>
+      </ng-container>
+
+      <!-- Cost Column -->
+      <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef> Price </th>
+        <td mat-cell *matCellDef="let item"> {{item.product.price | currency}} </td>
+        <td mat-footer-cell *matFooterCellDef> <b>{{total | currency}}</b> </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
+    </table>
+
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button (click)="placeOrderFlag = true" mat-button matStepperNext>
+        {{placeOrderFlag ? 'Next' : 'Comfirm Order'}}
+      </button>
+    </div>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Complete Payment</ng-template>
+    <h1>Payment Type: {{paymentEvaluator()}}</h1>
+    <ng-template [ngIf]="paymentInfo.paymentType == 'card'">
+      <h2>Card Number: {{paymentInfo.cardNo}}</h2>
+    </ng-template>
+
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <ng-template [ngIf]="paymentInfo.paymentType.toLowerCase() == 'card'" [ngIfElse]="COD">
+        <button (click)="pay()" mat-raised-button color="primary">
+          Pay {{total | currency}}
+        </button>
+      </ng-template>
+      <ng-template #COD>
+        <button (click)="pay()" mat-raised-button color="primary">
+          Place Order
+        </button>
+      </ng-template>
+
+    </div>
+  </mat-step>
+</mat-horizontal-stepper>

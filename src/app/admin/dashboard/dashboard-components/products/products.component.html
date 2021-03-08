@@ -1,0 +1,22 @@
+
+<mat-tab-group mat-align-tabs="end">
+  <mat-tab label="View Products">
+    <ng-template [ngIf]="($productState | async).loading">
+      <div>
+        Loading...
+      </div>
+    </ng-template>
+    <ng-template [ngIf]="($productState | async).error">
+      <div>
+        {{($productState | async).error}}
+      </div>
+    </ng-template>
+    <ng-template [ngIf]="($productState | async).products.length">
+      <pm-product-view [products]="($productState | async).products"></pm-product-view>
+    </ng-template>
+
+  </mat-tab>
+  <mat-tab label="Add Products">
+    <pm-product-form (productSubmit)="handleSubmit($event)"></pm-product-form>
+  </mat-tab>
+</mat-tab-group>

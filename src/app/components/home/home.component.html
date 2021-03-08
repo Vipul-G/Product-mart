@@ -1,0 +1,18 @@
+
+<ng-template [ngIf]="($productState | async).loading">
+  <p>
+    Loading...
+  </p>
+</ng-template>
+<ng-template [ngIf]="($productState | async).error">
+  <p>
+    {{($productState | async).error}}
+  </p>
+</ng-template>
+<ng-template [ngIf]="($productState | async).products.length">
+  <pm-product-view
+  view="customer"
+  (addToCart)="addToCart($event)"
+  [products]="($productState | async).products"></pm-product-view>
+</ng-template>
+

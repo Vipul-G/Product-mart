@@ -1,0 +1,42 @@
+
+<mat-grid-list cols="4" rowHeight="1:1.2" gutterSize="1">
+
+  <mat-grid-tile *ngFor="let p of products" style="background-size: contain">
+
+    <mat-card>
+      <div (click)="click('dialog', p)" pmDialog [dialogTemplate]="dialogContent">
+        <mat-card-header>
+          <mat-card-title>{{p.name}}</mat-card-title>
+          <mat-card-subtitle>{{p.available ? 'In Stock' : 'Out of Stock'}}</mat-card-subtitle>| ${{p.price}}
+        </mat-card-header>
+
+        <img mat-card-image [src]="getImageUrl(p.image_path)" [alt]="p.name" height="200">
+      </div>
+      <mat-card-actions>
+        <ng-template [ngIf]="view === 'admin'" [ngIfElse]="cutomerOptions">
+          <button mat-button (click)="click('manage', p)">MANAGE</button>
+          <button mat-button (click)="click('remove', p)">Remove</button>
+        </ng-template>
+        <ng-template #cutomerOptions>
+          <button mat-button (click)="click('buy', p)">Buy</button>
+          <button mat-button (click)="click('addToCart', p)">Add to Cart</button>
+        </ng-template>
+      </mat-card-actions>
+    </mat-card>
+
+  </mat-grid-tile>
+</mat-grid-list>
+
+<ng-template [ngIf]="" #dialogContent>
+  <h2 mat-dialog-title>{{selectedProduct.name}}</h2>
+  <h3 mat-dialog-title>{{selectedProduct.available ? 'In Stock' : 'Out of Stock'}}</h3>
+<mat-dialog-content class="mat-typography">
+  <img mat-card-image [src]="getImageUrl(selectedProduct.image_path)" alt="selectedProduct.name">
+  {{selectedProduct.description}}
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Install</button>
+</mat-dialog-actions>
+
+</ng-template>

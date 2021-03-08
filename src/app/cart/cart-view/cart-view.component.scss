@@ -1,0 +1,41 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+
+}
+#list {
+  margin: 0;
+  padding: 0;
+  flex-grow: 2;
+}
+#total {
+  margin: 0;
+  padding: 0;
+  flex-grow: 1;
+  text-align: center;
+}
+
+img {
+  margin: 0;
+  padding: 0;
+  height: 200px;
+}
+
+.image {
+  width: 300px;
+}
+
+.info {
+  width: 50%;
+}
+
+
+.margin {
+  margin-left: 5rem;
+}
+
+.description {
+  width: 450px;
+  height: auto;
+}

@@ -1,0 +1,68 @@
+<ng-template [ngIf]="cartState.cartProducts.length" [ngIfElse]="empty">
+<div class="container">
+
+  <table mat-table id="list" [dataSource]="cartState.cartProducts" class="mat-elevation-z8">
+
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="image">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let cp" class="image">
+        <img [src]="getImageUrl(cp.product)"/>
+      </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="info">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let cp" class="info">
+        <h2>{{cp.product.name}}</h2>
+        <h3><b>${{cp.product.price}}.99</b></h3>
+        <p class="description"><i>{{ cp.product.description }}</i></p>
+      </td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="other">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let cp" class="other">
+        <h3>Quantity: {{cp.quantity}}</h3>
+        <button class="material-icons" [disabled]="cp.quantity == 1" (click)="updateCount(cp.product.id, -1)">
+          remove_circle_outline
+        </button>
+        <button class="material-icons" (click)="updateCount(cp.product.id, 1)">
+          add_circle_outline
+          </button>
+
+
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let cp">
+        <button (click)="removeProduct(cp.product.id)">
+          <span class="material-icons">
+            delete
+          </span>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-card id="total">
+    <h2>Subtotal</h2>
+    <h1>${{total}}</h1>
+    <button (click)="proceedToBuy()" [ngStyle]="{display: 'block'}">Proceed to Buy</button>
+  </mat-card>
+</div>
+</ng-template>
+
+<ng-template #empty>
+  <h1>Your cart is empty</h1>
+</ng-template>

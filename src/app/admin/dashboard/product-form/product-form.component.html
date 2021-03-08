@@ -1,0 +1,48 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>{{mode=='add' ? 'Product Form' : 'Manage Product'}}</mat-card-title>
+      <mat-card-subtitle *ngIf="mode=='manage'">
+          <button mat-flat-button color="warn" (click)="handleDelete()">Remove</button>
+          <button mat-flat-button color="primary" (click)="handleSubmit()">Update</button>
+      </mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="productForm" (submit)="handleSubmit()">
+      <mat-form-field appearance="legacy">
+        <mat-label>Product Name</mat-label>
+        <input id="nameIn" matInput placeholder="eg. laptop" formControlName="name">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Product Price</mat-label>
+        <input matInput formControlName="price">
+      </mat-form-field>
+      <mat-radio-group aria-label="In Stock?" >
+        In Stock?
+        <input checked type="radio" id="true" name="available" value="true" formControlName="available">
+        <label for="false">YES</label>
+
+        <input type="radio" id="false" name="available" value="false" formControlName="available">
+        <label for="false">NO</label>
+      </mat-radio-group>
+      <mat-form-field>
+        <mat-label>Product's Description</mat-label>
+        <textarea formControlName="description" matInput placeholder="Ex. It makes you feel..."></textarea>
+      </mat-form-field>
+
+      <button mat-stroked-button type="button"
+      style="border: 1px solid black;"
+      (click)="filePicker.click()">{{mode==='add' ? 'Pick Image' : 'Change Image'}}</button>
+      <input type="file" #filePicker (change)="showPreview($event)">
+      <mat-card-actions>
+        <ng-template [ngIf]="mode === 'add'">
+            <button type="submit" mat-fab aria-label="Example icon button with a heart icon">
+              <mat-icon>add_circle_outline</mat-icon>
+            </button>
+        </ng-template>
+      </mat-card-actions>
+        <img [src]="imageURL" mat-card-image>
+
+    </form>
+
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,50 @@
+<mat-toolbar>
+  <mat-toolbar-row>
+    <button type="button" mat-icon-button (click)="sidenav.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span>Product Mart</span>
+
+    <a mat-button color="accent" routerLink="/home" routerLinkActive="active">Home</a>
+    <a mat-button color="accent" (click)="redirect()" routerLinkActive="active">My oders</a>
+
+    <span class="header-space"></span>
+
+    <a mat-button color="accent" *ngIf="!userState.name" routerLink="/auth/login" routerLinkActive="active">Login</a>
+    <button mat-button color="primary" routerLink="/admin">Admin</button>
+    <a mat-button *ngIf="userState" [matMenuTriggerFor]="menu">
+      <mat-icon>account_circle</mat-icon>
+      {{userState.name}}
+    </a>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="logoutEvent.emit()">Logout</button>
+    </mat-menu>
+
+    <span [matBadge]="cartLenght" matBadgeOverlap="true">
+      <button mat-button routerLink="cart">
+        <mat-icon>shopping_cart</mat-icon>
+      </button>
+    </span>
+
+  </mat-toolbar-row>
+
+
+</mat-toolbar>
+<mat-drawer-container class="example-container">
+  <mat-drawer #sidenav class="example-sidenav" mode="over">
+    <mat-list>
+      <mat-list-item>
+        <a mat-button routerLink="/home">Home</a>
+      </mat-list-item>
+      <mat-list-item>
+        <a mat-button (click)="redirect()">Orders</a>
+      </mat-list-item>
+    </mat-list>
+
+
+  </mat-drawer>
+  <mat-drawer-content>
+
+    <router-outlet></router-outlet>
+  </mat-drawer-content>
+</mat-drawer-container>
