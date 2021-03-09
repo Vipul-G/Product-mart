@@ -1,27 +1,22 @@
 # ProductMart
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.1.
+## Introduction
 
-## Development server
+This is a ecommerce website.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Features
 
-## Code scaffolding
+1. Authentication using phone number and password
+2. Role based authorization. There are two roles Admin and Customer
+3. Admin can manage products. S/he can add/delete/update products. Products added will be available to buy by the customer
+4. Admin can block the user
+5. Customer can buy the products directly or s/he can add the products in the cart
+6. Payment system has been simulated. Once payment completed order will be placed. Transactions has been used to make operation atomic
+7. Customer can view his/her orders
+8. Changes in the website either through admin or customer will be reflected in the real time.   
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Tech Stack
 
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+Font End : Angular, Ngrx, Angular Material
+Back End : Node Js, Express
+Database : MySQL
